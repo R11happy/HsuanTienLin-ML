@@ -66,8 +66,15 @@ class Decision(object):
         index = 0
         
         ### YOUR CODE HERE
-
-
+        N = X.shape[0]
+        M = X.shape[1]
+        for i in range(M):
+            error, target_theta, sign_ = self.calculate_Ein(X[:,i], Y)
+            if error < Ein:
+                Ein = error
+                theta = target_theta
+                sign = sign_
+                index = i
 
         ### END YOUR CODE
 
@@ -77,9 +84,11 @@ class Decision(object):
     def decision_dtest(self, path, theta, sign, index):
         
         ### YOUR CODE HERE
-
-
-
+        X, Y = read_input_data(path)
+        X = X[:, index]
+        pred = sign*np.sign(X-theta)
+        error = np.sum(pred != Y)
+        Etest = error / Y.shape[0]
         ### END YOUR CODE
         
         return Etest
